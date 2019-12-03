@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .main{
+            margin-top: 100px;
+        }
+        .main div {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: center;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+<div id="app" class="main">
+    <div id="QRCode" class="QR-image"></div>
+    <div class="">1.复制WXID 2.点击生成 3.扫一扫加好友</div>
+    <div>
+        <input type="text" v-model="wxValue"><button @click="makeCode">生成</button>
+    </div>
+</div>
+<script src="qrcode.min.js"></script>
+<script src="vue.min.js"></script>
+<script type="text/javascript">
+    new Vue({
+        el: "#app",
+        data() {
+            return {
+                divCode:'',
+                baseURL:'weixin://contacts/profile/',
+                wxValue : 'jamis404'
+            }
+        },
+        mounted() {
+             this.divCode = new QRCode(document.getElementById("QRCode"),{
+                width : 200,
+                height : 200
+            });
+            this.makeCode()
+        },
+        methods: {
+            makeCode(){
+                let codeValue = this.baseURL + this.wxValue
+                let divCode = this.divCode
+                divCode.makeCode(codeValue)
+            }
+        }
+    });
+</script>
+</body>
+</html>
